@@ -1,5 +1,13 @@
-@extends('layout')
-@section('konten')
+@extends('layouts.app')
+@section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Ops</strong> Input gagal<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+    @endif
     <h1>Form Tambah Data User</h1>
     <form action="/user/tambah_simpan" method="post">
         @csrf

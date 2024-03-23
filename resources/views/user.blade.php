@@ -1,8 +1,13 @@
-@extends('layout')
-@section('konten')
+@extends('layouts.app')
+@section('content')
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
     <h1>Data User</h1>
-    <a href="/user/tambah">Tambah User</a>
-    <table class="table table-striped-columns" border="1" cellpadding="2" cellspacing="0">
+    <a class="btn btn-success" href="/user/tambah">Tambah User</a>
+    <table class="table table-striped-columns mt-2" border="1" cellpadding="2" cellspacing="0">
         <tr>
             <th>ID</th>
             <th>Username</th>
@@ -20,7 +25,13 @@
                 <td>{{ $d->level_id }}</td>
                 <td>{{ $d->level->level_kode }}</td>
                 <td>{{ $d->level->level_nama }}</td>
-                <td><a href="/user/ubah/{{ $d->user_id }}">Ubah</a><a href="/user/hapus/{{ $d->user_id }}">Hapus</a></td>
+                <td><a href="/user/show/{{ $d->user_id }}" class="btn btn-info">Show</a> <a class="btn btn-primary"
+                        href="/user/ubah/{{ $d->user_id }}">Ubah</a> <a class="btn btn-danger"
+                        href="/user/hapus/{{ $d->user_id }}"
+                        onclick="return
+                        confirm('Apakah Anda yakin ingin menghapus data
+                        ini?'">Hapus</a>
+                </td>
             </tr>
         @endforeach
 

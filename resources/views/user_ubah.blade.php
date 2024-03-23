@@ -1,5 +1,5 @@
-@extends('layout')
-@section('konten')
+@extends('layouts.app')
+@section('content')
     <h1>Form Ubah Data User</h1>
     <a href="/user">Kembali</a>
     <br><br>
