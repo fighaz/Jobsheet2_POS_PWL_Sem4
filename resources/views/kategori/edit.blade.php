@@ -1,13 +1,4 @@
-@extends('layouts.app')
-
-{{-- Customize layout sections --}}
-
-@section('subtitle', 'Kategori')
-@section('content_header_title', 'Kategori')
-@section('content_header_subtitle', 'Edit')
-
-{{-- Content body: main page content --}}
-
+@extends('layouts.template')
 @section('content')
     <div class="container">
         <div class="card card-primary">

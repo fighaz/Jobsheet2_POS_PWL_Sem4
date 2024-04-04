@@ -1,9 +1,4 @@
-@extends('layouts.app')
-
-@section('subtitle', 'Kategori')
-@section('content_header_title', 'Kategori')
-@section('content_header_subtitle', 'Create')
-
+@extends('layouts.template')
 @section('content')
     @if ($errors->any())
         <div class="alert alert-danger">

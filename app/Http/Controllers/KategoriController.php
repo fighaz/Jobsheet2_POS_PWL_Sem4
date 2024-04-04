@@ -13,11 +13,27 @@ class KategoriController extends Controller
     //
     public function index(KategoriDataTable $dataTable)
     {
-        return $dataTable->render('kategori.index');
+        $breadcrumb = (object) [
+            'title' => 'Daftar kategori',
+            'list' => ['Home', 'Kategori'],
+        ];
+        $page = (object) [
+            'title' => 'Daftar kategori yang terdaftar dalam sistem',
+        ];
+        $activeMenu = 'kategori';
+        return $dataTable->render('kategori.index', compact('breadcrumb', 'page', 'activeMenu'));
     }
     public function create()
     {
-        return view('kategori.create');
+        $breadcrumb = (object) [
+            'title' => 'Daftar kategori',
+            'list' => ['Home', 'Kategori'],
+        ];
+        $page = (object) [
+            'title' => 'Daftar kategori yang terdaftar dalam sistem',
+        ];
+        $activeMenu = 'kategori';
+        return view('kategori.create', compact('breadcrumb', 'page', 'activeMenu'));
     }
     // public function store(Request $request){
     //     $validated = $request->validate([
@@ -50,8 +66,16 @@ class KategoriController extends Controller
     }
     public function edit($id)
     {
+        $breadcrumb = (object) [
+            'title' => 'Daftar kategori',
+            'list' => ['Home', 'Kategori'],
+        ];
+        $page = (object) [
+            'title' => 'Daftar kategori yang terdaftar dalam sistem',
+        ];
+        $activeMenu = 'kategori';
         $kategori = KategoriModel::find($id);
-        return view('kategori.edit', ['data' => $kategori]);
+        return view('kategori.edit', ['breadcrumb' => $breadcrumb, 'activeMenu' => $activeMenu, 'page' => $page, 'data' => $kategori]);
     }
 
     public function update($id, Request $request)
