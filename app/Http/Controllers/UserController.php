@@ -76,7 +76,7 @@ class UserController extends Controller
             ]);
         }
 
-        return redirect('/user')->with('succes', 'user Berhasil Ditambahkan');
+        return redirect('/user')->with('success', 'user Berhasil Ditambahkan');
     }
     public function edit($id)
     {
@@ -125,7 +125,7 @@ class UserController extends Controller
         $activeMenu = 'user';
         return view('user.show', compact('user', 'breadcrumb', 'page', 'activeMenu'));
     }
-    public function delet($id)
+    public function delete($id)
     {
         $check = UserModel::find($id);
         if (!$check) {

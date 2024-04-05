@@ -84,16 +84,19 @@ class StokController extends Controller
             'stok_tanggal' => 'required|date',
             'stok_jumlah' => 'required|integer|max:10',
         ]);
-
-        StokModel::create($request->all());
-
-        return redirect('/stok')->with('status', 'Data stok berhasil ditambahkan!');
+        if (StokModel::find($request->barang_id)) {
+            $stok = StokModel::where('barang_id', $request->barang_id)->increment('stok_jumlah', $request->stok_jumlah);
+            return redirect('/stok')->with('success', 'Data stok barang sudah ditambah!');
+        } else {
+            StokModel::create($request->all());
+            return redirect('/stok')->with('success', 'Data stok berhasil ditambahkan!');
+        }
     }
 
     // Menampilkan detail stok
     public function show($id)
     {
-        $stok = StokModel::find($id)->with('barang')->with('user')->first();
+        $stok = StokModel::with('barang')->with('user')->find($id);
         $breadcrumb = (object) [
             'title' => 'Detail Stok',
             'list' => ['Home', 'Stok', 'Detail']
@@ -111,7 +114,7 @@ class StokController extends Controller
     // Menampilkan halaman form edit stok
     public function edit($id)
     {
-        $stok = StokModel::find($id);
+        $stok = StokModel::with('barang')->with('user')->find($id);
         $breadcrumb = (object) [
             'title' => 'Edit Stok',
             'list' => ['Home', 'Stok', 'Edit']
@@ -122,9 +125,8 @@ class StokController extends Controller
         ];
 
         $activeMenu = 'stok'; //set menu yang aktif
-        $barang = BarangModel::all();
         $username = UserModel::all();
-        return view('stok.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'stok' => $stok, 'barang' => $barang, 'user' => $username]);
+        return view('stok.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'stok' => $stok, 'user' => $username]);
     }
 
     // Menyimpan perubahan data stok yg diedit

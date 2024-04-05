@@ -12,10 +12,10 @@
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">Nama Barang</label>
                     <div class="col-10">
-                        <select class="form-control" id="barang_nama" name="barang_nama" required>
+                        <select class="form-control" id="barang_nama" name="barang_id" required>
                             <option value="">- Pilih Nama Barang -</option>
                             @foreach ($barang as $item)
-                                <option value="{{ $item->barang_nama }}">{{ $item->barang_nama }}</option>
+                                <option value="{{ $item->barang_id }}">{{ $item->barang_nama }}</option>
                             @endforeach
                         </select>
                         @error('barang_nama')
@@ -26,10 +26,10 @@
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">PIC</label>
                     <div class="col-10">
-                        <select class="form-control" id="username" name="username" required>
+                        <select class="form-control" id="username" name="user_id" required>
                             <option value="">- Pilih PIC -</option>
                             @foreach ($user as $item)
-                                <option value="{{ $item->username }}">{{ $item->username }}</option>
+                                <option value="{{ $item->user_id }}">{{ $item->username }}</option>
                             @endforeach
                         </select>
                         @error('username')

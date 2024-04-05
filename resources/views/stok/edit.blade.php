@@ -20,16 +20,8 @@
                     <div class="form-group row">
                         <label class="col-2 control-label col-form-label">Nama Barang</label>
                         <div class="col-10">
-                            <select class="form-control" id="barang_nama" name="barang_nama" required>
-                                <option value="">- Pilih Nama Barang -</option>
-                                @foreach ($barang as $item)
-                                    <option value="{{ $item->barang_nama }}" @if ($item->barang_id == $stok->barang_id) selected @endif>
-                                        {{ $item->barang_nama }}</option>
-                                @endforeach
-                            </select>
-                            @error('barang_nama')
-                                <small class="form-text text-danger">{{ $message }}</small>
-                            @enderror
+                            {{ $stok->barang->barang_nama }}
+                            <input value="{{ $stok->barang->barang_id }}"disabled hidden></input>
                         </div>
                     </div>
                     <div class="form-group row">
