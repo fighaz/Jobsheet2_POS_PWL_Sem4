@@ -97,7 +97,7 @@ class UserController extends Controller
     {
 
         $validated = $request->validate([
-            'username' => 'required|string|min:3|unique:m_user,username' . $id . ',user_id',
+            'username' => 'required|string|min:3|unique:m_user,username,' . $id . ',user_id',
             'nama' => 'required|string|max:100',
             'password' => 'nullable|min:5',
             'level_id' => 'required|integer'
@@ -106,7 +106,7 @@ class UserController extends Controller
             UserModel::find($id)->update([
                 'username' => $request->username,
                 'nama' => $request->nama,
-                'password' => $request->password ? Hash::make('$request->password') : UserModel::find($id)->password,
+                'password' => $request->password ? Hash::make($request->password) : UserModel::find($id)->password,
                 'level_id' => $request->level_id,
             ]);
         }
