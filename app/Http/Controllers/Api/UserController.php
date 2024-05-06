@@ -37,7 +37,7 @@ class UserController extends Controller
         if ($user) {
             return response()->json([
                 'success' => true,
-                'user' => $user,
+                'data' => $user,
             ], 201);
         }
         //return JSON process insert failed
@@ -56,7 +56,7 @@ class UserController extends Controller
             'nama' => 'required',
             'password' => 'required|min:5|confirmed',
             'level_id' => 'required',
-            'image' => 'required'
+            'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         //if validations fails
         if ($validator->fails()) {
@@ -67,6 +67,7 @@ class UserController extends Controller
             'nama' => $request->nama ? $request->nama : UserModel::find($id)->nama,
             'password' => $request->password ? Hash::make($request->password) : UserModel::find($id)->password,
             'level_id' => $request->level_id ? $request->level_id : UserModel::find($id)->level_id,
+            'image' => $request->image ? Hash::make($request->image) : UserModel::find($id)->image,
         ]);
         $user = UserModel::with('level')->find($id);
         if ($user) {
