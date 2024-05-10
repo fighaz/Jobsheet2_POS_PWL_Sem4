@@ -35,7 +35,7 @@
             <table class="table table-bordered table-striped table-hover table-sm" id="table_transaksi">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th class="col-md-1">ID</th>
                         <th>PIC</th>
                         <th>Pembeli</th>
                         <th>Kode Penjualan</th>

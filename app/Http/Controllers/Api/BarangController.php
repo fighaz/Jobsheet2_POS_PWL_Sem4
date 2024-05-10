@@ -28,7 +28,19 @@ class BarangController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $barang = BarangModel::create($request->all());
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $hashedName = $image->hashName();
+            $image->storeAs('public/barang', $hashedName);
+        }
+        $barang = BarangModel::create([
+            'kategori_id' => $request->kategori_id,
+            'barang_kode' => $request->barang_kode,
+            'barang_nama' => $request->barang_nama,
+            'harga_beli' => $request->harga_beli,
+            'harga_jual' => $request->harga_jual,
+            'image' => $hashedName,
+        ]);
         if ($barang) {
             return response()->json([
                 'success' => true,

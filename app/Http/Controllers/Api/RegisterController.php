@@ -24,13 +24,18 @@ class RegisterController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $hashedName = $image->hashName();
+            $image->storeAs('public/user', $hashedName);
+        }
 
         $user = UserModel::create([
             'username' => $request->username,
             'nama' => $request->nama,
             'password' => Hash::make($request->password),
             'level_id' => $request->level_id,
-            'image' => $request->image->hashName(),
+            'image' => $hashedName,
         ]);
 
         if ($user) {
