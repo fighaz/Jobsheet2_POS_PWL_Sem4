@@ -38,6 +38,7 @@
                         <th>Nama</th>
                         <th>Level
                             Pengguna</th>
+                        <th>Image</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -61,32 +62,40 @@
                     }
                 },
                 columns: [{
-                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "text-center",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "username",
-                    className: "",
-                    orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
-                    searchable: true // searchable: true, jika ingin kolom ini bisa  dicari
-                }, {
-                    data: "nama",
-                    className: "",
-                    orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
-                    searchable: true // searchable: true, jika ingin kolom ini bisa dicari
+                        data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    }, {
+                        data: "username",
+                        className: "",
+                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: true // searchable: true, jika ingin kolom ini bisa  dicari
+                    }, {
+                        data: "nama",
+                        className: "",
+                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
 
-                }, {
-                    data: "level.level_nama",
-                    className: "",
-                    orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
-                    searchable: false // searchable: true, jika ingin kolom ini bisa dicari
-                }, {
-                    data: "aksi",
-                    className: "",
-                    orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
-                    searchable: false // searchable: true, jika ingin kolom ini bisa dicari
-                }]
+                    }, {
+                        data: "level.level_nama",
+                        className: "",
+                        orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: false // searchable: true, jika ingin kolom ini bisa dicari
+                    },
+                    {
+                        data: "image",
+                        className: "",
+                        orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: false // searchable: true, jika ingin kolom ini bisa dicari
+                    },
+                    {
+                        data: "aksi",
+                        className: "",
+                        orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: false // searchable: true, jika ingin kolom ini bisa dicari
+                    }
+                ]
             });
             $('#level_id').on('change', function() {
                 dataUser.ajax.reload();

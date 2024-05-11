@@ -1,20 +1,13 @@
 @extends('layouts.template')
+
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Ops</strong> Input gagal<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-    @endif
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools"></div>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ url('user') }}" class="form-horizontal">
+            <form method="POST" action="{{ url('user') }}" class="form-horizontal" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group row">
                     <label class="col-3 control-label col-form-label">Level</label>
@@ -55,6 +48,16 @@
                     <div class="col-9">
                         <input type="password" class="form-control" id="password" name="password" required>
                         @error('password')
+                            <small class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 control-label col-form-label">Image</label>
+                    <div class="col-10">
+                        <input type="file" class="form-control" id="image" name="image"
+                            value="{{ old('image') }}" required>
+                        @error('image')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>

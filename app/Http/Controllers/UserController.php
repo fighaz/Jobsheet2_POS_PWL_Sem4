@@ -27,13 +27,17 @@ class UserController extends Controller
     }
     public function list(Request $request)
     {
-        $users = UserModel::select('user_id', 'username', 'nama', 'level_id')->with('level');
+        $users = UserModel::select('user_id', 'username', 'nama', 'level_id', 'image')->with('level');
         // Filter data user berdasarkan level_id
         if ($request->level_id) {
             $users->where('level_id', $request->level_id);
         }
         return DataTables::of($users)
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
+            ->addColumn('image', function ($user) {
+                $img = '<img src="' . $user->image . '" alt="" srcset="" width="98px" height="70px">';
+                return $img;
+            })
             ->addColumn('aksi', function ($user) {
                 // menambahkan kolom aksi
                 $btn = '<a href="' . url('/user/' . $user->user_id) . '" class="btn btn-info btn-sm">Detail</a> ';
@@ -43,7 +47,7 @@ class UserController extends Controller
                     '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakit menghapus data ini?\');">Hapus</button></form>';
                 return $btn;
             })
-            ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
+            ->rawColumns(['aksi', 'image']) // memberitahu bahwa kolom aksi adalah html
             ->make(true);
     }
     public function create()
@@ -65,14 +69,21 @@ class UserController extends Controller
             'username' => 'required|string|min:3|unique:m_user,username',
             'nama' => 'required|string|max:100',
             'password' => 'required|min:5',
-            'level_id' => 'required|integer'
+            'level_id' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048'
         ]);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $hashedName = $image->hashName();
+            $image->storeAs('public/user', $hashedName);
+        }
         if ($validated) {
             UserModel::create([
                 'username' => $request->username,
                 'nama' => $request->nama,
                 'password' => Hash::make($request->password),
                 'level_id' => $request->level_id,
+                'image' => $hashedName,
             ]);
         }
 
@@ -100,14 +111,22 @@ class UserController extends Controller
             'username' => 'required|string|min:3|unique:m_user,username,' . $id . ',user_id',
             'nama' => 'required|string|max:100',
             'password' => 'nullable|min:5',
-            'level_id' => 'required|integer'
+            'level_id' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $hashedName = $image->hashName();
+            $image->storeAs('public/user', $hashedName);
+        }
         if ($validated) {
             UserModel::find($id)->update([
                 'username' => $request->username,
                 'nama' => $request->nama,
                 'password' => $request->password ? Hash::make($request->password) : UserModel::find($id)->password,
                 'level_id' => $request->level_id,
+                'image' => $hashedName,
             ]);
         }
         return redirect('/user')->with('success', 'Data user berhasil diubah');

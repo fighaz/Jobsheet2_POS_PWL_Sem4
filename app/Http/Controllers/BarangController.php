@@ -31,7 +31,7 @@ class BarangController extends Controller
     // Ambil data barang dalam bentuk json untuk datatables
     public function list(Request $request)
     {
-        $barangs = BarangModel::select('barang_id', 'kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual')
+        $barangs = BarangModel::select('barang_id', 'kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual', 'image')
             ->with('kategori');
 
         // Filter data barang berdasarkan kategori_id
@@ -41,6 +41,10 @@ class BarangController extends Controller
 
         return DataTables::of($barangs)
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
+            ->addColumn('image', function ($barang) {
+                $img = '<img src="' . $barang->image . '" alt="" srcset="" width="98px" height="70px">';
+                return $img;
+            })
             ->addColumn('aksi', function ($barang) {
                 $btn = '<a href="' . url('/barang/' . $barang->barang_id) . '" class="btn btn-info btn-sm">Detail</a> ';
                 $btn .= '<a href="' . url('/barang/' . $barang->barang_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
@@ -49,7 +53,7 @@ class BarangController extends Controller
                     '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
                 return $btn;
             })
-            ->rawColumns(['aksi'])
+            ->rawColumns(['aksi', 'image'])
             ->make(true);
     }
 
@@ -81,9 +85,21 @@ class BarangController extends Controller
             'barang_nama' => 'required|string|max:100',
             'harga_beli' => 'required|integer',
             'harga_jual' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048'
         ]);
-
-        BarangModel::create($request->all());
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $hashedName = $image->hashName();
+            $image->storeAs('public/barang', $hashedName);
+        }
+        BarangModel::create([
+            'kategori_id' => $request->kategori_id,
+            'barang_kode' => $request->barang_kode,
+            'barang_nama' => $request->barang_nama,
+            'harga_beli' => $request->harga_beli,
+            'harga_jual' => $request->harga_jual,
+            'image' => $hashedName,
+        ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil ditambahkan');
     }

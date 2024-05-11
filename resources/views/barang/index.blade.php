@@ -41,6 +41,7 @@
                         <th>Nama Kategori</th>
                         <th>Harga Beli</th>
                         <th>Harga Jual</th>
+                        <th>Image</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -97,6 +98,12 @@
                     },
                     {
                         data: "harga_jual",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "image",
                         className: "",
                         orderable: true,
                         searchable: true

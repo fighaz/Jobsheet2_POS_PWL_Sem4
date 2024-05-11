@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
@@ -23,6 +24,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/file-upload', [FileUploadController::class, 'fileUpload']);
+Route::post('/file-upload', [FileUploadController::class, 'prosesfileUpload']);
 
 Route::get('/', [WelcomeController::class, 'index']);
 
