@@ -106,7 +106,10 @@
                         data: "image",
                         className: "",
                         orderable: true,
-                        searchable: true
+                        searchable: true,
+                        render: function(data, type, full, meta) {
+                            return data ? '<img src="' + data + '" width="100px">' : '';
+                        }
                     },
                     {
                         data: "aksi",

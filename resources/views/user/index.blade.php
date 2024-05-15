@@ -87,7 +87,10 @@
                         data: "image",
                         className: "",
                         orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
-                        searchable: false // searchable: true, jika ingin kolom ini bisa dicari
+                        searchable: false, // searchable: true, jika ingin kolom ini bisa dicari
+                        render: function(data, type, full, meta) {
+                            return data ? '<img src="' + data + '" width="100px">' : '';
+                        }
                     },
                     {
                         data: "aksi",

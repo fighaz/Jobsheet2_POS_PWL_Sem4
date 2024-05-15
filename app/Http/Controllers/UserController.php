@@ -34,10 +34,6 @@ class UserController extends Controller
         }
         return DataTables::of($users)
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
-            ->addColumn('image', function ($user) {
-                $img = '<img src="' . $user->image . '" alt="" srcset="" width="98px" height="70px">';
-                return $img;
-            })
             ->addColumn('aksi', function ($user) {
                 // menambahkan kolom aksi
                 $btn = '<a href="' . url('/user/' . $user->user_id) . '" class="btn btn-info btn-sm">Detail</a> ';
@@ -47,7 +43,7 @@ class UserController extends Controller
                     '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakit menghapus data ini?\');">Hapus</button></form>';
                 return $btn;
             })
-            ->rawColumns(['aksi', 'image']) // memberitahu bahwa kolom aksi adalah html
+            ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
             ->make(true);
     }
     public function create()

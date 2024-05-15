@@ -41,10 +41,6 @@ class BarangController extends Controller
 
         return DataTables::of($barangs)
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
-            ->addColumn('image', function ($barang) {
-                $img = '<img src="' . $barang->image . '" alt="" srcset="" width="98px" height="70px">';
-                return $img;
-            })
             ->addColumn('aksi', function ($barang) {
                 $btn = '<a href="' . url('/barang/' . $barang->barang_id) . '" class="btn btn-info btn-sm">Detail</a> ';
                 $btn .= '<a href="' . url('/barang/' . $barang->barang_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
@@ -53,7 +49,7 @@ class BarangController extends Controller
                     '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
                 return $btn;
             })
-            ->rawColumns(['aksi', 'image'])
+            ->rawColumns(['aksi'])
             ->make(true);
     }
 
